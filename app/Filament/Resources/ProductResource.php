@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -60,19 +61,32 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('value')
+                    ->alignment('center')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('condition')
-                    ->searchable(),
+                    ->label('Status')
+                    ->badge()
+                    ->alignment('center')
+                    ->colors([
+                        'warning' => 'encomendado',
+                        'success' => 'em estoque',
+                        'danger' => 'vendido',
+                    ])
+                    ->icons([
+                        'heroicon-o-clock' => 'encomendado',
+                        'heroicon-o-check-circle' => 'em estoque',
+                        'heroicon-o-x-circle' => 'vendido',
+                    ])
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->alignment('center')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('buy_date')
+                    ->alignment('center')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -89,6 +103,7 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
