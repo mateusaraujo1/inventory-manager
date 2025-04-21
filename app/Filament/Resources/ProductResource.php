@@ -34,14 +34,23 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('quantity')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('condition')
+                    ->options([
+                        'encomendado' => 'Encomendado',
+                        'em estoque' => 'Em Estoque',
+                        'vendido' => 'Vendido',
+                    ]),
+                Forms\Components\Select::make('condition')
                     ->required()
-                    ->maxLength(255),
+                    ->options([
+                        'novo' => 'Novo',
+                        'semi-novo' => 'Semi-novo',
+                        'usado' => 'Usado',
+                    ]),
                 Forms\Components\DatePicker::make('buy_date')
-                    ->required(),
+                    ->required()
+                    ->default(now()),
             ]);
     }
 
