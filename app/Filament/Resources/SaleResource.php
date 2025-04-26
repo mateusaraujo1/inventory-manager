@@ -6,6 +6,7 @@ use App\Filament\Resources\SaleResource\Pages;
 use App\Filament\Resources\SaleResource\RelationManagers;
 use App\Models\Sale;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,6 +29,10 @@ class SaleResource extends Resource
                     ->numeric(),
                 Forms\Components\DatePicker::make('sale_date')
                     ->required(),
+                Select::make('products')
+                    ->multiple()
+                    ->relationship(titleAttribute: 'name')
+                    ->preload()
             ]);
     }
 

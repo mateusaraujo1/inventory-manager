@@ -16,8 +16,8 @@ class Product extends Model
         'description'
     ];
 
-    public function sales()
-    {
-        return $this->hasMany('App\Models\Sale');
+    public function sales() {
+        return $this->belongsToMany(Sale::class)->withPivot('quantity')->withTimestamps();
     }
+
 }

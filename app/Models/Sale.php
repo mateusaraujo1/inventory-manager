@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    public function products()
-    {
-        return $this->belongsToMany('App\Models\Product');
+    protected $fillable = [
+        'sale_value',
+        'sale_date'
+    ];
+
+    public function products() {
+        return $this->belongsToMany(Product::class)->withPivot('quantity')->withTimestamps();
     }
+
 }
