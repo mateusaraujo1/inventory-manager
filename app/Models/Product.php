@@ -15,4 +15,9 @@ class Product extends Model
         'buy_date',
         'description'
     ];
+
+    public function sales()
+    {
+        return $this->hasMany('App\Models\Sale');
+    }
 }
