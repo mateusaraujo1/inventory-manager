@@ -14,11 +14,14 @@ class CreateSale extends CreateRecord
     {
         $sale = $this->record; // Pega a venda recém-criada
 
+        $sale->load('products');
+
         foreach ($sale->products as $product) {
             $quantitySold = $product->pivot->quantity;
 
             if ($product->quantity >= $quantitySold) {
                 $product->decrement('quantity', $quantitySold);
+                $product->updateStatus();
             }
         }
     }

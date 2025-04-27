@@ -38,6 +38,7 @@ class Sale extends Model
         foreach ($originalProducts as $product) {
             $quantitySold = $product->pivot->quantity;
             $product->increment('quantity', $quantitySold);
+            $product->updateStatus();
         }
     }
 

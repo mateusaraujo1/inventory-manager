@@ -27,6 +27,7 @@ class EditSale extends EditRecord
             $quantitySold = $product->pivot->quantity;
 
             $product->increment('quantity', $quantitySold); // Devolve para o estoque
+            $product->updateStatus();
         }
     }
 
@@ -41,6 +42,7 @@ class EditSale extends EditRecord
 
             if ($product->quantity >= $quantitySold) {
                 $product->decrement('quantity', $quantitySold); // Dá baixa no novo estoque
+                $product->updateStatus();
             }
         }
     }

@@ -16,8 +16,14 @@ class Product extends Model
         'description'
     ];
 
-    public function sales() {
+    public function sales()
+    {
         return $this->belongsToMany(Sale::class)->withPivot('quantity')->withTimestamps();
     }
 
+    public function updateStatus()
+    {
+        $this->status = $this->quantity == 0 ? 'esgotado' : 'em estoque';
+        $this->save();
+    }
 }
