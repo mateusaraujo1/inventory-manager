@@ -40,7 +40,7 @@ class ProductResource extends Resource
                     ->options([
                         'encomendado' => 'Encomendado',
                         'em estoque' => 'Em Estoque',
-                        'vendido' => 'Vendido',
+                        'esgotado' => 'Esgotado',
                     ]),
                 Forms\Components\Select::make('condition')
                     ->required()
@@ -73,12 +73,12 @@ class ProductResource extends Resource
                     ->colors([
                         'warning' => 'encomendado',
                         'success' => 'em estoque',
-                        'danger' => 'vendido',
+                        'danger' => 'esgotado',
                     ])
                     ->icons([
                         'heroicon-o-clock' => 'encomendado',
                         'heroicon-o-check-circle' => 'em estoque',
-                        'heroicon-o-x-circle' => 'vendido',
+                        'heroicon-o-x-circle' => 'esgotado',
                     ])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
