@@ -34,6 +34,7 @@ class ProductResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('quantity')
                     ->required()
+                    ->default(1)
                     ->numeric(),
                 Forms\Components\Select::make('status')
                     ->required()
@@ -41,14 +42,16 @@ class ProductResource extends Resource
                         'encomendado' => 'Encomendado',
                         'em estoque' => 'Em Estoque',
                         'esgotado' => 'Esgotado',
-                    ]),
+                    ])
+                    ->default('em estoque'),
                 Forms\Components\Select::make('condition')
                     ->required()
                     ->options([
                         'novo' => 'Novo',
                         'semi-novo' => 'Semi-novo',
                         'usado' => 'Usado',
-                    ]),
+                    ])
+                    ->default('novo'),
                 Forms\Components\DatePicker::make('buy_date')
                     ->required()
                     ->default(now()),

@@ -28,10 +28,13 @@ class SaleResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\DatePicker::make('sale_date')
-                    ->required(),
+                    ->required()
+                    ->default(now()),
                 Select::make('products')
                     ->multiple()
-                    ->relationship(titleAttribute: 'name')
+                    ->relationship('products', 'name', function ($query) {
+                        $query->where('products.quantity', '>', 0);
+                    })
                     ->preload()
             ]);
     }
@@ -42,6 +45,7 @@ class SaleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('sale_value')
                     ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sale_date')
                     ->date()
@@ -60,6 +64,7 @@ class SaleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
