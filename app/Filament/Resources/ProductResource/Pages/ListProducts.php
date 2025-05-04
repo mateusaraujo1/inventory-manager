@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
+use App\Filament\Widgets\InventoryOverview;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
