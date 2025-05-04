@@ -20,7 +20,7 @@ class Sale extends Model
     {
         $productsValue = 0;
         foreach($this->products as $product) {
-            $productsValue += $product->value;
+            $productsValue += ($product->value * $product->pivot->quantity);
         }
 
         return $productsValue;
@@ -28,7 +28,7 @@ class Sale extends Model
 
     public function profit()
     {
-        return $this->value - $this->productsValue();
+        return $this->sale_value - $this->productsValue();
     }
 
 

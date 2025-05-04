@@ -47,6 +47,8 @@ class SaleResource extends Resource
                     ->numeric()
                     ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
+                Tables\Columns\TextColumn::make('profit')
+                    ->getStateUsing(fn ($record) => 'R$ ' . number_format($record->profit(), 2, ',', '.')),
                 Tables\Columns\TextColumn::make('sale_date')
                     ->date()
                     ->sortable(),
