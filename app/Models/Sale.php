@@ -16,6 +16,22 @@ class Sale extends Model
         return $this->belongsToMany(Product::class)->withPivot('quantity')->withTimestamps();
     }
 
+    public function productsValue() 
+    {
+        $productsValue = 0;
+        foreach($this->products as $product) {
+            $productsValue += $product->value;
+        }
+
+        return $productsValue;
+    }
+
+    public function profit()
+    {
+        return $this->value - $this->productsValue();
+    }
+
+
     /**
      * Dá baixa no estoque com base nos produtos da venda.
      */
