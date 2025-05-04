@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Filament\Resources\ProductResource\Widgets\TotalProductValue;
 use App\Filament\Widgets\InventoryOverview;
 use App\Models\Product;
 use Filament\Forms;
@@ -131,4 +132,11 @@ class ProductResource extends Resource
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
+
+   public static function getWidgets(): array
+    {
+        return [
+            TotalProductValue::class,
+        ];
+    } 
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SaleResource\Pages;
 use App\Filament\Resources\SaleResource\RelationManagers;
+use App\Filament\Resources\SaleResource\Widgets\TotalProfitValue;
 use App\Models\Sale;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -90,4 +91,11 @@ class SaleResource extends Resource
             'edit' => Pages\EditSale::route('/{record}/edit'),
         ];
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            TotalProfitValue::class,
+        ];
+    } 
 }
