@@ -44,6 +44,12 @@ class SaleResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('products_list')
+                    ->label('Produtos')
+                    ->getStateUsing(function ($record) {
+                        return $record->products->pluck('name')->join(', ');
+                    })
+                    ->limit(50), 
                 Tables\Columns\TextColumn::make('sale_value')
                     ->numeric()
                     ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
