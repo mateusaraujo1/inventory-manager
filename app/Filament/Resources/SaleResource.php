@@ -28,6 +28,9 @@ class SaleResource extends Resource
                 Forms\Components\TextInput::make('sale_value')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('pending')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\DatePicker::make('sale_date')
                     ->required()
                     ->default(now()),
@@ -51,6 +54,11 @@ class SaleResource extends Resource
                     })
                     ->limit(50), 
                 Tables\Columns\TextColumn::make('sale_value')
+                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('pending')
+                    ->label('R$ pending')
                     ->numeric()
                     ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),

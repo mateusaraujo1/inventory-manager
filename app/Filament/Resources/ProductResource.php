@@ -38,6 +38,10 @@ class ProductResource extends Resource
                     ->required()
                     ->default(1)
                     ->numeric(),
+                Forms\Components\TextInput::make('reserved')
+                    ->required()
+                    ->default(0)
+                    ->numeric(),
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
@@ -87,6 +91,10 @@ class ProductResource extends Resource
                     ])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->alignment('center')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('reserved')
                     ->alignment('center')
                     ->numeric()
                     ->sortable(),
