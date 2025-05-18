@@ -4,7 +4,10 @@ namespace App\Filament\Resources\SaleResource\Pages;
 
 use App\Filament\Resources\SaleResource;
 use Filament\Actions;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Forms\Form;
+use Filament\Forms;
 
 class EditSale extends EditRecord
 {
@@ -50,5 +53,45 @@ class EditSale extends EditRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form
+    ->schema([
+        Forms\Components\TextInput::make('sale_value')
+            ->required()
+            ->numeric(),
+
+        Forms\Components\TextInput::make('pending')
+            ->required()
+            ->numeric(),
+
+        Select::make('products')
+            ->multiple()
+            ->relationship('products', 'name', modifyQueryUsing: function ($query) {
+                if ($this->record) {
+                    $query->where(function ($q) {
+                        // Produtos com quantidade > 0
+                        $q->where('products.quantity', '>', 0)
+                        // OU já associados à venda atual
+                        ->orWhereHas('sales', function ($sq) {
+                            $sq->where('sales.id', $this->record->id);
+                        });
+                    });
+                } else {
+                    // Criação: mostra apenas com quantidade > 0
+                    $query->where('products.quantity', '>', 0);
+                }
+            })
+            ->preload()
+            ->label('Produtos'),
+
+
+        Forms\Components\DatePicker::make('sale_date')
+            ->required()
+            ->default(now()),
+    ]);
+
     }
 }

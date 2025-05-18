@@ -31,15 +31,15 @@ class SaleResource extends Resource
                 Forms\Components\TextInput::make('pending')
                     ->required()
                     ->numeric(),
-                Forms\Components\DatePicker::make('sale_date')
-                    ->required()
-                    ->default(now()),
                 Select::make('products')
                     ->multiple()
                     ->relationship('products', 'name', function ($query) {
                         $query->where('products.quantity', '>', 0);
                     })
-                    ->preload()
+                    ->preload(),
+                Forms\Components\DatePicker::make('sale_date')
+                    ->required()
+                    ->default(now()),
             ]);
     }
 
