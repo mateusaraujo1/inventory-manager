@@ -55,17 +55,31 @@ class SaleResource extends Resource
                     ->limit(50), 
                 Tables\Columns\TextColumn::make('sale_value')
                     ->numeric()
+                    ->alignment('center')
                     ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('pending')
                     ->label('R$ pending')
                     ->numeric()
-                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
-                    ->sortable(),
+                    ->alignment('center')
+                    ->formatStateUsing(function ($state) {
+                        $formatted = 'R$ ' . number_format($state, 2, ',', '.');
+
+                        if ($state == 0) {
+                            return '✅';
+                        }
+
+                        return $formatted;
+                    })
+                    ->sortable()
+                    ->html(),
                 Tables\Columns\TextColumn::make('profit')
-                    ->getStateUsing(fn ($record) => 'R$ ' . number_format($record->profit(), 2, ',', '.')),
+                    ->alignment('center')
+                    ->getStateUsing(fn ($record) => 'R$ ' . number_format($record->profit(), 2, ',', '.'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('sale_date')
                     ->date()
+                    ->alignment('center')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

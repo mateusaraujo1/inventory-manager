@@ -8,6 +8,7 @@ class Sale extends Model
 {
     protected $fillable = [
         'sale_value',
+        'pending',
         'sale_date'
     ];
 

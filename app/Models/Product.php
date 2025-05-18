@@ -10,6 +10,7 @@ class Product extends Model
         'name',
         'value',
         'quantity',
+        'reserved',
         'status',
         'condition',
         'buy_date',
@@ -28,6 +29,7 @@ class Product extends Model
     public function updateStatus()
     {
         $this->status = $this->quantity == 0 ? 'esgotado' : 'em estoque';
+        $this->reserved = $this->quantity == 0 ? 0 : $this->reserved;
         $this->save();
     }
 }
